@@ -1,0 +1,42 @@
+{% extends "base_nav.html" %}
+{% load static %}
+{% block content %}
+    
+</br>
+Welcome to the profile {{ profile.user }}
+{% if profile.user == user %}
+</br>
+Your Bio is
+</br>
+{% else %}
+</br>
+The Bio is
+</br>
+{% endif %}
+{{ profile.bio }}
+</br>
+
+<img src="{{ profile.profile_pic.url }}" width="50" height="50"/>
+{% if profile.user == user %}
+<p>Edit Profile</p>
+{% else %}
+<form action="{% url 'members:follow' %}" method="POST" >
+    {% csrf_token %}
+
+    <input type="hidden" value="{{ user }}" name="follwer" />
+    <input type="hidden" value="{{ profile.user.id }}" name="follwingid" />
+    <input type="hidden" value="{{ profile.user }}" name="following" />
+    {% if user in followers.all %}
+    <button type="submit" >{{ button_text }}</button>
+    {% else %}
+    <button type="submit" >{{ button_text }}</button>
+    {% endif %}
+</form>
+{% endif %}
+{{ followers_count }}
+{{ following }} <b>following</b>
+{{ followers }} <b>followers</b>
+
+<a href="{% url 'customers:post_create'  %}" >Post</a>
+
+{% endblock %}

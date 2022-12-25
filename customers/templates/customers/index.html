@@ -1,0 +1,111 @@
+
+{% extends "base_nav.html" %}
+{% load static %}
+{% load user_agents %}
+{% block head %} 
+<script >
+    setTimeout(() => {
+      const box = document.getElementById('mydiv');
+    
+      // 👇️ hides element (still takes up space on page)
+      box.style.visibility = 'hidden';
+    }, 1000);
+    </script>
+    <link rel="stylesheet" type='text/css' href="{% static 'css/style.css' %}">
+{% endblock %}
+{% block content %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-primary" id="mydiv" role="alert">
+    {{ message }}
+</div>
+    {% endfor %}
+    {% endif %} 
+
+    {{ user_agent }}
+
+    {% if request|is_pc %}
+    PC stuff...
+    {% endif %}
+    {% if request|is_tablet %}
+    Tablet stuff...
+    {% endif %}
+    {% if user.is_authenticated %}
+    <h2>Welcome {{ user.username }} to the django tutorials</h2>
+    <p><a href="{%  url 'members:users-profile' user.profile.slug %}" >Profile</a> </p>
+    <h3><a href="{%  url 'members:logout' %}">logout</a></h3>
+    {% else %}
+    <h2>Welcome guest to the django tutorials</h2>
+    <h3><a href="{%  url 'members:login' %}">login</a>
+         <a href="{%  url 'members:register' %}">register</a>
+    </h3>
+    {% endif %}
+
+{% if post_list %}
+    {% for post in post_list %}
+        <p>
+            <div class="media">
+            <img class="align-self-start mr-3" src="{{ post.owner.profile.profile_pic.url }}" width="25" height="25" alt="Generic placeholder image"/>
+             <b><a href="{%  url 'members:users-profile' post.owner.profile.slug %}" >{{ post.owner.username }}</a></b><br/>
+            {{ post.title }}<br/>
+            <div class="media-body">{{ post.text }} <br/>
+            </div>
+            {% if post.owner == user %}
+            <p>( <a href="{% url 'customers:post_delete' post.id %}">Delete</a>)</p>
+            {% endif %}
+            <!-- LIKES -->
+                {% if user.is_authenticated %}
+                <form action="{% url 'customers:like_post' post.id %}" method="POST">
+                {% csrf_token %}
+                {% if user not in post.likes.all %}
+                <button type="submit" name="post_id" value="{{post.id}}" class ="like-post-button"><img src="{% static '/images/like.png' %}" width="25" height="25"></button>
+                {% else %}
+                <button type="submit" name="post_id" value="{{post.id}}" class ="like-post-button" ><img src="{% static '/images/unlike.png' %}" width="25" height="25"/></button>
+                {% endif %}
+                </form>
+                {% endif %}
+                <strong class="text-secondary">{{ post.number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+                        </p>
+                    </div>
+    {% endfor %}
+{% endif %}
+
+    {% for profile in profile_list %}
+    <li><a href="{% url 'members:users-profile' profile.slug %}">{{ profile.user.username }} {{ profile.slug }}</a></li>
+    {% endfor %}
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Add comment
+  </button>
+  
+  <!-- Modal -->
+  <form action="{% url 'customers:post_create' %}" >
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            {% include "customers/create.html" %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button  type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% if followers_posts_list %}
+    {% for post in followers_posts_list%}
+            {{ post.title }} </br>
+            {{ post.text }}
+    {% endfor %}
+{% endif %}
+
+    {% endblock %}
