@@ -31,7 +31,7 @@
     Tablet stuff...
     {% endif %}
     {% if user.is_authenticated %}
-    <h2>Welcome {{ user.username }} to the django tutorials</h2>
+    <h2>Welcome {{ user.username }} to the Social Network Of Abdul</h2>
     <p><a href="{%  url 'members:users-profile' user.profile.slug %}" >Profile</a> </p>
     <h3><a href="{%  url 'members:logout' %}">logout</a></h3>
     {% else %}

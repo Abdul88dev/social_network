@@ -55,11 +55,11 @@ def register_user(request):
                 pass
             if not user_exist:
                 user=User.objects.create_user(username=username,password=password,email=email)
-                char = string.ascii_lowercase
-                size = 10
-                letters = username+''.join(random.choice(char) for _ in range(size))
-                slug = slugify(unidecode(letters))
-                Profile.objects.create(user=user,slug=slug)
+                #char = string.ascii_lowercase
+                #size = 10
+                #letters = username+''.join(random.choice(char) for _ in range(size))
+                #slug = slugify(unidecode(letters))
+                #Profile.objects.create(user=user,slug=slug)
                 login(request,user)
                 return redirect('/')
             else :
