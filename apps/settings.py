@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'members.apps.MembersConfig',
     ##apps 
     'django_user_agents',
+    'crispy_forms',
 
 
 ]

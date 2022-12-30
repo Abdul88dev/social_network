@@ -11,7 +11,7 @@
       box.style.visibility = 'hidden';
     }, 1000);
     </script>
-    <link rel="stylesheet" type='text/css' href="{% static 'css/style.css' %}">
+
 {% endblock %}
 {% block content %}
     {% if messages %}
@@ -21,27 +21,41 @@
 </div>
     {% endfor %}
     {% endif %} 
-
-    {{ user_agent }}
-
-    {% if request|is_pc %}
-    PC stuff...
-    {% endif %}
-    {% if request|is_tablet %}
-    Tablet stuff...
-    {% endif %}
     {% if user.is_authenticated %}
-    <h2>Welcome {{ user.username }} to the Social Network Of Abdul</h2>
-    <p><a href="{%  url 'members:users-profile' user.profile.slug %}" >Profile</a> </p>
-    <h3><a href="{%  url 'members:logout' %}">logout</a></h3>
-    {% else %}
-    <h2>Welcome guest to the django tutorials</h2>
-    <h3><a href="{%  url 'members:login' %}">login</a>
-         <a href="{%  url 'members:register' %}">register</a>
-    </h3>
+
+    <!-- adding a post area -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <!-- CUSTOM BLOCKQUOTE -->
+                    <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded">
+                        <div class="blockquote-custom-icon"><i class="fa fad fa-quote-right"></i></div>
+                        <p class="mb-0 mt-2 font-italic">    
+                            <form id="post_create_form" method="post">
+                            <div class="row">
+                                {% csrf_token %}
+                                {% for field in create_form %}
+                                        <div class="form-group col-4">
+                                            <label class="col-12">{{ field.label }}</label>
+                                            {{ field }}
+                                        </div>
+                                {% endfor %}
+                                        <input type="submit" class="btn btn-primary" value="Create a post" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </blockquote><!-- END -->
+    
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end of adding a post -->
     {% endif %}
 
-{% if post_list %}
+<!-- {% if post_list %}
     {% for post in post_list %}
         <p>
             <div class="media">
@@ -53,7 +67,7 @@
             {% if post.owner == user %}
             <p>( <a href="{% url 'customers:post_delete' post.id %}">Delete</a>)</p>
             {% endif %}
-            <!-- LIKES -->
+            
                 {% if user.is_authenticated %}
                 <form action="{% url 'customers:like_post' post.id %}" method="POST">
                 {% csrf_token %}
@@ -68,44 +82,113 @@
                         </p>
                     </div>
     {% endfor %}
-{% endif %}
-
-    {% for profile in profile_list %}
-    <li><a href="{% url 'members:users-profile' profile.slug %}">{{ profile.user.username }} {{ profile.slug }}</a></li>
-    {% endfor %}
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Add comment
-  </button>
-  
-  <!-- Modal -->
-  <form action="{% url 'customers:post_create' %}" >
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            {% include "customers/create.html" %}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button  type="submit" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
+{% endif %} -->
+<!-- #region of post of the following-->
 {% if followers_posts_list %}
     {% for post in followers_posts_list%}
             {{ post.title }} </br>
             {{ post.text }}
     {% endfor %}
 {% endif %}
+<!--this part is for testing the layout-->
+{% if post_list %}
+{% for post in post_list %}
 
-    {% endblock %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-8" id="post-section">
+            <div class="d-flex flex-column comment-section" id="{{post.id}}myGroup">
+                <div class="bg-white p-2">
+                    <div class="d-flex flex-row user-info"><img class="rounded-circle" src="{{ post.owner.profile.profile_pic.url }}" width="40" height="40">
+                        <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name"><a href="{%  url 'members:users-profile' post.owner.profile.slug %}" >{{ post.owner.username }}</a>
+                        </span><span class="date text-black-50">Shared publicly - {{ post.publish_date }}</span></div>
+                    </div>
+                    <div class="mt-2">
+                        <p class="comment-text" width="100%">{{ post.text }} </p>
+                    </div>
+                </div>
+                <div class="bg-white p-2">
+                    <div class="d-flex flex-row fs-12">
+                        <!-- LIKES -->
+                {% if user.is_authenticated %}
+                <form action="{% url 'customers:like_post' post.id %}" method="POST">
+                {% csrf_token %}
+                {% if user not in post.likes.all %}
+                <button type="submit" name="post_id" value="{{post.id}}" class ="like-post-button"><img src="{% static '/images/like.png' %}" width="25" height="25"></button>
+                {% else %}
+                <button type="submit" name="post_id" value="{{post.id}}" class ="like-post-button" ><img src="{% static '/images/unlike.png' %}" width="25" height="25"/></button>
+                {% endif %}
+                </form>
+                {% endif %}
+                <strong class="text-secondary">{{ post.number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+                        </p>
+                        <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-1" href="#{{post.id}}collapse-1"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+                        <div class="like p-2 cursor action-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse-2" href="#{{post.id}}collapse-2"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                    </div>
+                </div>
+                <div id="{{post.id}}collapse-1" class="bg-light p-2 collapse" data-parent="#{{post.id}}myGroup" >
+                    <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="{{ post.owner.profile.profile_pic.url }}" width="40"><textarea class="form-control ml-1 shadow-none textarea"></textarea></div>
+                    <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="button">Post comment</button><button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button></div>
+                </div>
+                <div id="{{post.id}}collapse-2" class="bg-light p-2 collapse" data-parent="#{{ post.id }}myGroup">
+                    <div class="d-flex flex-row align-items-start"><i class="fa fa-facebook border p-3 rounded mr-1"></i><i class="fa fa-twitter border p-3 rounded mr-1"></i><i class="fa fa-linkedin border p-3 rounded mr-1"></i><i class="fa fa-instagram border p-3 rounded mr-1"></i><i class="fa fa-dribbble border p-3 rounded mr-1"></i>
+                        <i
+                            class="fa fa-pinterest-p border p-3 rounded mr-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end the part  for testing the layout-->
+{% endfor %}
+{% endif %}
+
+
+{% endblock %}
+{% block javascript %}
+<script>
+    /*
+        On submiting the form, send the POST ajax
+        request to server and after successfull submission
+        display the object.
+    */
+    $("#post_create_form").submit(function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'customers:post_create_ajax' %}",
+            data: serializedData,
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+                     },
+            success: function (response) {
+                // on successfull creating object
+                // 1. clear the form.
+                $("#post_create_form").trigger("reset");
+                // display the newly friend to table.
+                //var instance = JSON.parse(response["instance"]);
+                //var fields = instance[0]["fields"];
+                //$("#my_friends tbody").prepend(
+                /*     `<tr>
+                    <td>${fields["nick_name"]||""}</td>
+                    <td>${fields["first_name"]||""}</td>
+                    <td>${fields["last_name"]||""}</td>
+                    <td>${fields["likes"]||""}</td>
+                    <td>${fields["dob"]||""}</td>
+                    <td>${fields["lives_in"]||""}</td>
+                    </tr>`
+                ) */
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    })
+</script>
+{% endblock javascript %}

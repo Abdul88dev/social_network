@@ -33,12 +33,15 @@ class Profile(models.Model):
     def create_slug(size=10, chars=string.ascii_lowercase + string.digits):
         return ''.join(random.choice(chars) for _ in range(size))
 
+    def __str__(self):
+        return self.user.username+" Profile"
+
 class Follwing_count(models.Model):
     follwer = models.CharField(max_length=100)
     follwing = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.follwing
+        return self.follwing +" followed By "+ self.follwer
 
 class Agent(models.Model):
     user =   models.OneToOneField(User,on_delete=models.CASCADE)

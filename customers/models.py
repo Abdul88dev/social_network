@@ -18,9 +18,13 @@ class Post(models.Model) :
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(User,related_name="post_likes",blank=True)
-
+    #shows The likes numbers
     def number_of_likes(self):
         return self.likes.count()
+    
+    #returns the publish date
+    def publish_date(self):
+        return self.created_at.strftime("%b-%Y")
     # Shows up in the admin list
     def __str__(self):
         return self.title
