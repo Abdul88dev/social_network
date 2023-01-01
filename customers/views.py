@@ -21,7 +21,7 @@ class Mainview(OwnerListView):
     template_name='customers/index.html'
 
     def get(self,request,*args,**kwargs):
-        posts=Post.objects.all()
+        posts=Post.objects.all().order_by('-created_at')
         profiles=Profile.objects.all()
         #getting the user browser info
         user_agent = get_user_agent(request).browser.family
@@ -145,6 +145,9 @@ def commentcreate(request , pk):
     return JsonResponse({"error": ""}, status=400)
 
 
-    
+
+def Testview(request):
+    return render(request,'navbar.html',{})
+
 
         

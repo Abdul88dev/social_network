@@ -48,7 +48,7 @@
 <body>
 {% block navbar %} {% endblock %}
 
-<div class="container">
+<div class="container-fluid mt-5">
 
 {% block welcome %} {% endblock %}
 {% block messages %}
@@ -60,6 +60,15 @@
     {% endfor %}
     {% endif %}
 {% endblock %}
+<div class="sidenav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#clients">Clients</a>
+    <a href="#contact">Contact</a>
+  </div>   
+<div class="row flex-xl-nowrap">   
+
+</div>
 {% block content %}
 {% endblock %}
 </div>
