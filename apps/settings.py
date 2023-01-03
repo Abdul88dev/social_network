@@ -145,12 +145,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
 LOGIN_URL = 'members:login'
-LOGIN_REDIRECT_URL = 'customers:test'
+LOGIN_REDIRECT_URL = 'customers:test-view'
 LOGOUT_URL = 'members:logout'
 LOGOUT_REDIRECT_URL = 'members:login'
+
+
+SOCIAL_AUTH_GITHUB_KEY = 'fc3f5878e8f5554fa173'
+SOCIAL_AUTH_GITHUB_SECRET = 'b2ef7d1a74806771784d9b2b6b5d8df2c8563235'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '127214565097-6kpmogkl63ishu92qis5kd8lsg6a8vea.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
