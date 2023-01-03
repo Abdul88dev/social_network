@@ -21,33 +21,36 @@ class Mainview(OwnerListView):
     template_name='customers/index.html'
 
     def get(self,request,*args,**kwargs):
-        posts=Post.objects.all().order_by('-created_at')
-        profiles=Profile.objects.all()
-        #getting the user browser info
-        user_agent = get_user_agent(request).browser.family
-        #passing the create form to the main page
-        create_form = CreateForm()
+        if request.user.is_authenticated:
+            posts=Post.objects.all().order_by('-created_at')
+            profiles=Profile.objects.all()
+            #getting the user browser info
+            user_agent = get_user_agent(request).browser.family
+            #passing the create form to the main page
+            create_form = CreateForm()
 
-        followers_posts_list = {}
-        try:
-            userobject = get_object_or_404(Profile, user=self.request.user)
-            followers=Follwing_count.objects.filter(follwer=userobject.user)
-            following = len(Follwing_count.objects.filter(follwing=userobject.user))
-            follower_count = len(followers)
-            for follower in followers :
-                user_object = User.objects.get(username=follower)
-                followers_posts_list=Post.objects.filter(owner=user_object)
-        except:
-            pass
-        if followers_posts_list:
-            context = {'profile_list':profiles,'post_list':posts,'user_agent':user_agent,'create_form':create_form,
-            'followers_posts_list':followers_posts_list,'following':following , 'followers':follower_count}
-        else:
-             context = {'profile_list':profiles,'post_list':posts,'user_agent':user_agent,'create_form':create_form}
-        return render(request,'customers/index.html',context)
+            followers_posts_list = {}
+            try:
+                userobject = get_object_or_404(Profile, user=self.request.user)
+                followers=Follwing_count.objects.filter(follwer=userobject.user)
+                following = len(Follwing_count.objects.filter(follwing=userobject.user))
+                follower_count = len(followers)
+                for follower in followers :
+                    user_object = User.objects.get(username=follower)
+                    followers_posts_list=Post.objects.filter(owner=user_object)
+            except:
+                pass
+            if followers_posts_list:
+                context = {'profile_list':profiles,'post_list':posts,'user_agent':user_agent,'create_form':create_form,
+                'followers_posts_list':followers_posts_list,'following':following , 'followers':follower_count}
+            else:
+                context = {'profile_list':profiles,'post_list':posts,'user_agent':user_agent,'create_form':create_form}
+            return render(request,'customers/index.html',context)
+        else :
+            return render(request,'members/login.html')
 
 
-class PostDetail(OwnerDetailView):
+class PostDetail(OwnerDetailView):               
     model= Post
     template_name='customers/index.html'
     def get_context_data(self, **kwargs):
@@ -116,15 +119,12 @@ def post_create(request):
     if is_ajax:
         print("success!")
         if request.method == "POST":
-            form = CreateForm(request.POST)
-            if form.is_valid():
-                forminstance = form.save(commit=False)
-                forminstance.owner = request.user
-                forminstance.save()
-                ser_instance = serializers.serialize('json', [ forminstance, ])
-                return JsonResponse({"instance": ser_instance}, status=200)
+            post= request.POST["message"]
+            new_post =Post.objects.create(text=post,owner=request.user)
+            res= serializers.serialize('json',[new_post,])
+            return JsonResponse({"instance": res}, status=200)
         else:
-             return JsonResponse({"error": form.errors}, status=400)
+             return JsonResponse({"error": request.errors}, status=400)
     return JsonResponse({"error": ""}, status=400)
 
 
@@ -147,7 +147,36 @@ def commentcreate(request , pk):
 
 
 def Testview(request):
-    return render(request,'navbar.html',{})
+    if request.user.is_authenticated :
+        posts=Post.objects.all().order_by('-created_at')
+        profiles=Profile.objects.all()
+        user_agent = get_user_agent(request).browser.family
+        #passing the create form to the main page
+        create_form = CreateForm()
+
+        followers_posts_list = {}
+        try:
+            userobject = get_object_or_404(Profile, user=request.user)
+            followers=Follwing_count.objects.filter(follwer=userobject.user)
+            following = len(Follwing_count.objects.filter(follwing=userobject.user))
+            follower_count = len(followers)
+            for follower in followers :
+                user_object = User.objects.get(username=follower)
+                followers_posts_list=Post.objects.filter(owner=user_object)
+        except:
+            pass
+        if followers_posts_list:
+            context = {'profile_list':profiles,'post_list':posts,'user_agent':user_agent,'create_form':create_form,
+                'followers_posts_list':followers_posts_list,'following':following , 'followers':follower_count}
+        else:
+            context = {'profile_list':profiles,'post_list':posts,'user_agent':user_agent,'create_form':create_form}
+        return render(request,'navbar.html',context)
+    else : 
+        return render(request,'members/register.html')
+
+
+
+    
 
 
         

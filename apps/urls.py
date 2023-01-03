@@ -23,6 +23,7 @@ urlpatterns = [
     path('members',include('members.urls')),
     path('', include('customers.urls')),
     path('admin/', admin.site.urls),
+    path('social-auth/', include('social_django.urls', namespace='social')),
 ]
 
 handler404="customers.views.handler404"

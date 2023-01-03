@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     ##apps 
     'django_user_agents',
     'crispy_forms',
+    'social_django',
 
 
 ]
@@ -55,7 +56,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #extra middleware
-    'django_user_agents.middleware.UserAgentMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware', #user agent to check the loged in browser for security
+    'social_django.middleware.SocialAuthExceptionMiddleware',#social auth
 ]
 
 ROOT_URLCONF = 'apps.urls'
@@ -71,6 +73,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages',#social auth
+                'social_django.context_processors.backends', #social auth
             ],
         },
     },
@@ -138,3 +142,15 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGIN_URL = 'members:login'
+LOGIN_REDIRECT_URL = 'customers:test'
+LOGOUT_URL = 'members:logout'
+LOGOUT_REDIRECT_URL = 'members:login'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '127214565097-6kpmogkl63ishu92qis5kd8lsg6a8vea.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'

@@ -36,7 +36,7 @@ def login_user(request):
 def logout_user(request):
     if request.user.is_authenticated:
         logout(request)
-        messages.add_message(request, messages.INFO, 'You Are Signed out')
+        messages.add_message(request, messages.INFO, 'You Are Signed out or Not Registered')
         return redirect('/')
     else:
         return redirect('/')

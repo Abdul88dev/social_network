@@ -9,7 +9,7 @@ class Post(models.Model) :
     title = models.CharField(
             max_length=200,
             validators=[MinLengthValidator(2, "Title must be greater than 2 characters")]
-    )
+    ,blank=True)
     text = models.TextField(blank=True,null=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     comments = models.ManyToManyField(settings.AUTH_USER_MODEL,
@@ -24,10 +24,10 @@ class Post(models.Model) :
     
     #returns the publish date
     def publish_date(self):
-        return self.created_at.strftime("%b-%Y")
+        return self.updated_at.strftime("%b-%Y")
     # Shows up in the admin list
     def __str__(self):
-        return self.title
+        return self.text
 
 
 class Comment(models.Model) :

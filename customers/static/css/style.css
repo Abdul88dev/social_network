@@ -2918,7 +2918,7 @@ Widget Area CSS
   right: 0;
   margin: auto;
   top: 0;
-  background-image: url(../../assets/images/view-profile-bg.jpg);
+  background-image: url(../images/view-profile-bg.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -3104,23 +3104,23 @@ Widget Area CSS
 }
 
 .widget-area .widget-page-you-like .item .thumb .fullimage.bg1 {
-  background-image: url(../../assets/images/page-you-like/like-1.jpg);
+  background-image: url(../images/page-you-like/like-1.jpg);
 }
 
 .widget-area .widget-page-you-like .item .thumb .fullimage.bg2 {
-  background-image: url(../../assets/images/page-you-like/like-2.jpg);
+  background-image: url(../images/page-you-like/like-2.jpg);
 }
 
 .widget-area .widget-page-you-like .item .thumb .fullimage.bg3 {
-  background-image: url(../../assets/images/page-you-like/like-3.jpg);
+  background-image: url(../images/page-you-like/like-3.jpg);
 }
 
 .widget-area .widget-page-you-like .item .thumb .fullimage.bg4 {
-  background-image: url(../../assets/images/page-you-like/like-4.jpg);
+  background-image: url(../images/page-you-like/like-4.jpg);
 }
 
 .widget-area .widget-page-you-like .item .thumb .fullimage.bg5 {
-  background-image: url(../../assets/images/page-you-like/like-5.jpg);
+  background-image: url(../images/page-you-like/like-5.jpg);
 }
 
 .widget-area .widget-page-you-like .item .info {
@@ -3259,15 +3259,15 @@ Widget Area CSS
 }
 
 .widget-area .widget-suggested-groups .item .thumb .fullimage.bg1 {
-  background-image: url(../../assets/images/suggested-groups/groups-1.jpg);
+  background-image: url(../images/suggested-groups/groups-1.jpg);
 }
 
 .widget-area .widget-suggested-groups .item .thumb .fullimage.bg2 {
-  background-image: url(../../assets/images/suggested-groups/groups-2.jpg);
+  background-image: url(../images/suggested-groups/groups-2.jpg);
 }
 
 .widget-area .widget-suggested-groups .item .thumb .fullimage.bg3 {
-  background-image: url(../../assets/images/suggested-groups/groups-3.jpg);
+  background-image: url(../images/suggested-groups/groups-3.jpg);
 }
 
 .widget-area .widget-suggested-groups .item .info {
@@ -3369,31 +3369,31 @@ Widget Area CSS
 }
 
 .widget-area .widget-birthday .item .thumb .fullimage.bg1 {
-  background-image: url(../../assets/images/user/user-37.jpg);
+  background-image: url(../images/user/user-37.jpg);
 }
 
 .widget-area .widget-birthday .item .thumb .fullimage.bg2 {
-  background-image: url(../../assets/images/user/user-38.jpg);
+  background-image: url(../images/user/user-38.jpg);
 }
 
 .widget-area .widget-birthday .item .thumb .fullimage.bg3 {
-  background-image: url(../../assets/images/user/user-26.jpg);
+  background-image: url(../images/user/user-26.jpg);
 }
 
 .widget-area .widget-birthday .item .thumb .fullimage.bg4 {
-  background-image: url(../../assets/images/user/user-27.jpg);
+  background-image: url(../images/user/user-27.jpg);
 }
 
 .widget-area .widget-birthday .item .thumb .fullimage.bg5 {
-  background-image: url(../../assets/images/user/user-39.jpg);
+  background-image: url(../images/user/user-39.jpg);
 }
 
 .widget-area .widget-birthday .item .thumb .fullimage.bg6 {
-  background-image: url(../../assets/images/user/user-40.jpg);
+  background-image: url(../images/user/user-40.jpg);
 }
 
 .widget-area .widget-birthday .item .thumb .fullimage.bg7 {
-  background-image: url(../../assets/images/user/user-41.jpg);
+  background-image: url(../images/user/user-41.jpg);
 }
 
 .widget-area .widget-birthday .item .info {
@@ -6601,7 +6601,7 @@ Favourite Area CSS
   right: 0;
   margin: auto;
   top: 0;
-  background-image: url(../../assets/images/view-profile-bg.jpg);
+  background-image: url(../images/view-profile-bg.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -8103,7 +8103,7 @@ Marketplace Area CSS
 }
 
 .products-details-image {
-  background-image: url(../../assets/images/products-details.jpg);
+  background-image: url(../images/products-details.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -8308,7 +8308,7 @@ Profile Authentication Area CSS
 .profile-authentication-area {
   padding-top: 150px;
   padding-bottom: 150px;
-  background-image: url(../../assets/images/profile-authentication-bg.jpg);
+  background-image: url(../images/profile-authentication-bg.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -8353,7 +8353,7 @@ Profile Authentication Area CSS
 }
 
 .profile-authentication-image {
-  background-image: url(../../assets/images/profile-authentication.jpg);
+  background-image: url(../images/profile-authentication.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -8893,7 +8893,7 @@ Profile Authentication Area CSS
 }
 
 .page-banner-box {
-  background-image: url(../../assets/images/account-setting.jpg);
+  background-image: url(../images/account-setting.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -8904,43 +8904,43 @@ Profile Authentication Area CSS
 }
 
 .page-banner-box.bg-2 {
-  background-image: url(../../assets/images/privacy.jpg);
+  background-image: url(../images/privacy.jpg);
 }
 
 .page-banner-box.bg-3 {
-  background-image: url(../../assets/images/help-and-support.jpg);
+  background-image: url(../images/help-and-support.jpg);
 }
 
 .page-banner-box.bg-4 {
-  background-image: url(../../assets/images/friends-bg.jpg);
+  background-image: url(../images/friends-bg.jpg);
 }
 
 .page-banner-box.bg-5 {
-  background-image: url(../../assets/images/groups-bg.jpg);
+  background-image: url(../images/groups-bg.jpg);
 }
 
 .page-banner-box.bg-6 {
-  background-image: url(../../assets/images/favourite-bg.jpg);
+  background-image: url(../images/favourite-bg.jpg);
 }
 
 .page-banner-box.bg-7 {
-  background-image: url(../../assets/images/events-bg.jpg);
+  background-image: url(../images/events-bg.jpg);
 }
 
 .page-banner-box.bg-8 {
-  background-image: url(../../assets/images/live-chat-bg.jpg);
+  background-image: url(../images/live-chat-bg.jpg);
 }
 
 .page-banner-box.bg-9 {
-  background-image: url(../../assets/images/birthday-bg.jpg);
+  background-image: url(../images/birthday-bg.jpg);
 }
 
 .page-banner-box.bg-10 {
-  background-image: url(../../assets/images/video-bg.jpg);
+  background-image: url(../images/video-bg.jpg);
 }
 
 .page-banner-box.bg-11 {
-  background-image: url(../../assets/images/weather-bg.jpg);
+  background-image: url(../images/weather-bg.jpg);
 }
 
 .page-banner-box h3 {
@@ -9201,3 +9201,13 @@ Profile Authentication Area CSS
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+footer {
+  text-align: center;
+  background-color: DarkSalmon;
+  color: white;
+  bottom:0px;
+  position: absolute;
+  margin:0px;
+  width:100%
+}
