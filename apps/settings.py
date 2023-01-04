@@ -11,10 +11,20 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os 
 from pathlib import Path
+import environ
+from decouple import config
+
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -155,7 +165,7 @@ LOGOUT_URL = 'members:logout'
 LOGOUT_REDIRECT_URL = 'members:login'
 
 
-SOCIAL_AUTH_GITHUB_KEY = 'fc3f5878e8f5554fa173'
-SOCIAL_AUTH_GITHUB_SECRET = 'b2ef7d1a74806771784d9b2b6b5d8df2c8563235'
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '127214565097-6kpmogkl63ishu92qis5kd8lsg6a8vea.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GITHUB_KEY = config("GITHUB_KEY")  
+SOCIAL_AUTH_GITHUB_SECRET = config("GITHUB_SECRET")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config("GOOGLE_OAUTH2_KEY")
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET =config("GOOGLE_OAUTH2_SECRET")
