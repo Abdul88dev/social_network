@@ -10,9 +10,9 @@ from django_user_agents.utils import get_user_agent
 from django.http import JsonResponse
 from django.core import serializers
 
-from .models import Post,Comment 
+from .models import Post,Comment ,StoryModel
 from members.models import Profile,Follwing_count
-from .forms import CommentForm,CreateForm
+from .forms import CommentForm,CreateForm , StoryForm
 from .owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
 # Create your views here.
 
@@ -52,7 +52,7 @@ class Mainview(OwnerListView):
 
 class PostDetail(OwnerDetailView):               
     model= Post
-    template_name='customers/index.html'
+    template_name='customers/main.html'
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         likes_connected = get_object_or_404(Post, id=self.kwargs['pk'])
@@ -99,7 +99,7 @@ def Likeview(request,pk):
     else:
         post.likes.add(request.user)
         ctx = {'liked':True}
-    return HttpResponseRedirect(reverse('customers:index'),ctx)
+    return HttpResponseRedirect(reverse('customers:test-view'),ctx)
 
 class DeletePost(OwnerDeleteView):
     model = Post
@@ -128,20 +128,19 @@ def post_create(request):
     return JsonResponse({"error": ""}, status=400)
 
 
-def commentcreate(request , pk):
+def commentcreate(request  ):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
     if is_ajax:
         print("success!")
         if request.method == "POST":
+            pk= request.POST["post-id"]
             post = get_object_or_404(Post,id=pk)
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                comment= Comment(text=form.text,owner=request.user,post=post)
-                comment.save()
-                ser=serializers.serialize('json', [ comment, ])
-                return JsonResponse({"instance": ser}, status=200)
+            comment_text = request.POST["comment-message"]
+            comment= Comment.objects.create(text=comment_text,owner=request.user,post=post)
+            ser=serializers.serialize('json', [ comment, ])
+            return JsonResponse({"instance": ser}, status=200)
         else:
-            return JsonResponse({"error": form.errors}, status=400)
+            return JsonResponse({"error": request.errors}, status=400)
     return JsonResponse({"error": ""}, status=400)
 
 
@@ -151,9 +150,9 @@ def Testview(request):
         posts=Post.objects.all().order_by('-created_at')
         profiles=Profile.objects.all()
         user_agent = get_user_agent(request).browser.family
+        comments = Comment.objects.all()
         #passing the create form to the main page
         create_form = CreateForm()
-
         followers_posts_list = {}
         try:
             userobject = get_object_or_404(Profile, user=request.user)
@@ -167,9 +166,10 @@ def Testview(request):
             pass
         if followers_posts_list:
             context = {'profile_list':profiles,'post_list':posts,'user_agent':user_agent,'create_form':create_form,
-                'followers_posts_list':followers_posts_list,'following':following , 'followers':follower_count}
+                'followers_posts_list':followers_posts_list,'following':following , 'followers':follower_count,'comments':comments}
         else:
-            context = {'profile_list':profiles,'post_list':posts,'user_agent':user_agent,'create_form':create_form}
+            context = {'profile_list':profiles,'post_list':posts,'user_agent':user_agent,'create_form':create_form,'following':following , 
+                    'followers':follower_count,'comments':comments,'users':followers}
         return render(request,'navbar.html',context)
     else : 
         return render(request,'members/register.html')
@@ -177,6 +177,14 @@ def Testview(request):
 
 
     
-
+def CreateStory(request):
+    if request.method == "POST":
+        form = StoryForm(request.POST,request.FILES or None)
+        if form.is_valid():
+            image= request.FILES.get('content')
+            caption = request.cleaned_data.get('caption')
+            story = StoryModel(user=request.user,content=image,caption=caption)
+            story.save()
+            return redirect()
 
         

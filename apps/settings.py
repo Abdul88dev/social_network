@@ -18,13 +18,13 @@ from decouple import config
 
 
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'django_user_agents',
     'crispy_forms',
     'social_django',
+    'apscheduler',
+    'django_celery_beat',
 
 
 ]
@@ -91,6 +93,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'apps.wsgi.application'
+
+ASGI_APPLICATION = "apps.routing.application" #routing.py will be created later
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        }
+        }
 
 
 # Database
@@ -169,3 +178,10 @@ SOCIAL_AUTH_GITHUB_KEY = config("GITHUB_KEY")
 SOCIAL_AUTH_GITHUB_SECRET = config("GITHUB_SECRET")
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config("GOOGLE_OAUTH2_KEY")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET =config("GOOGLE_OAUTH2_SECRET")
+
+
+
+#configurations of celery 
+CELERY_BROKER_URL='amqp://localhost:5672'
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

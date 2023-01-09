@@ -21,6 +21,9 @@ class Post(models.Model) :
     #shows The likes numbers
     def number_of_likes(self):
         return self.likes.count()
+
+    def comments_list(self):
+        return self.comments.all()
     
     #returns the publish date
     def publish_date(self):
@@ -46,4 +49,12 @@ class Comment(models.Model) :
         return self.text[:11]
 
 
+class StoryModel(models.Model):
+        user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='story_user')
+        content = models.ImageField(upload_to='images/')
+        caption = models.TextField(max_length=50)
+        expired = models.BooleanField(default=False)
+        posted = models.DateTimeField(auto_now_add=True)
 
+        def __str__(self):
+            return self.user.username

@@ -13,5 +13,6 @@ urlpatterns = [
     path('/post/delete/<int:pk>',
         views.DeletePost.as_view(success_url=reverse_lazy('customers:index')), name='post_delete'),
     path('post/ajax/create',views.post_create , name='post_create_ajax'),
+    path('comment/ajax/create',views.commentcreate , name='comment_create_ajax'),
     path('test',views.Testview , name='test-view'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

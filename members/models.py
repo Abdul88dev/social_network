@@ -14,9 +14,11 @@ class Profile(models.Model):
     )
     user = models.OneToOneField(User , on_delete=models.CASCADE)
     bio = models.TextField(max_length=2000,null=True)
+    birthday = models.DateField(null=True)
     profile_pic=models.ImageField(default='default.png',upload_to='profile-images')
     gender = models.CharField(max_length=1, choices=GENDER,blank=True)
     slug = models.SlugField(null=True)
+
 
 
 

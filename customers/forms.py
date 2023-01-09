@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post ,Comment
+from .models import Post ,Comment ,StoryModel
 
 #strip to remove empty spaces
 class CommentForm(forms.Form):
@@ -31,3 +31,13 @@ class CreateForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'text','main_img']  # Picture is manual
+
+
+class StoryForm(forms.Form):
+    content=forms.ImageField(required=True)
+    caption = forms.CharField(required=False,max_length=50,strip=True)
+
+    class Meta : 
+        model = StoryModel 
+        fields = ['content','caption']
+        
